@@ -21,23 +21,7 @@ public class IndexController {
 
 	@GetMapping("/")
 	public String index() {
-		return "page/index";
-	}
-	
-	@GetMapping("/loginForm")
-	public String loginForm() {
-		return "page/loginForm";
-	}
-	
-	@GetMapping("/joinForm")
-	public String joinForm() {
-		return "page/joinForm";
-	}
-	
-	@GetMapping("/test")
-	@ResponseBody
-	public String getMethodName(@RequestParam("name") String name) {
-		return "my name is..." + name;
+		return "index";
 	}
 	
 	@PutMapping("/user/{id}")
@@ -45,19 +29,6 @@ public class IndexController {
 	public User updateUser(@PathVariable(name = "id") int id, @RequestBody User reqUser) {
 		System.out.println(reqUser.toString());
 		return reqUser;
-	}
-
-	@PostMapping("/join")
-	@ResponseBody
-	public String join(User user) {
-		System.out.println("username : " + user.getUsername());
-		System.out.println("password : " + user.getPassword());
-		System.out.println("email : " + user.getEmail());
-
-		user.setRole(RoleType.USER);
-
-		userRepository.save(user);
-		return "회원가입이 완료되었습니다.";
 	}
 
 	@GetMapping("/user/{id}")
