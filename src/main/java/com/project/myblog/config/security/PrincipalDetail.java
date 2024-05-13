@@ -14,12 +14,13 @@ public class PrincipalDetail implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> collect = new ArrayList<>();
-		collect.add(new GrantedAuthority() {
-			@Override
-			public String getAuthority() {
-				return "ROLE_" + user.getRole();
-			}
-		});
+//		collect.add(new GrantedAuthority() {
+//			@Override
+//			public String getAuthority() {
+//				return "ROLE_" + user.getRole();
+//			}
+//		});
+		collect.add(()->{ return "ROLE_" + user.getRole(); });
 		return collect;
 	}
 
