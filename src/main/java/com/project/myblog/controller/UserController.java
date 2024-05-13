@@ -1,5 +1,6 @@
 package com.project.myblog.controller;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,45 +13,26 @@ import com.project.myblog.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
 @Controller
 @RequiredArgsConstructor
 public class UserController {
+	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
 	
-	@GetMapping("/user/loginForm")
+	@GetMapping("/auth/loginForm")
 	public String loginForm() {
 		return "user/loginForm";
 	}
 	
-	@GetMapping("/user/joinForm")
+	@GetMapping("/auth/joinForm")
 	public String joinForm() {
 		return "user/joinForm";
 	}
 	
-	@PostMapping("/user/join")
-	public User join1(@RequestBody User user) {
-		
-		return userRepository.save(user);
-	}
-	
-	@PostMapping("/join")
-	@ResponseBody
-	public String join(User user) {
-		System.out.println("username : " + user.getUsername());
-		System.out.println("password : " + user.getPassword());
-		System.out.println("email : " + user.getEmail());
-
-		user.setRole(RoleType.USER);
-
-		userRepository.save(user);
-		return "회원가입이 완료되었습니다.";
-	}
-	
-	@GetMapping("/user/logout")
+	@GetMapping("/auth/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		

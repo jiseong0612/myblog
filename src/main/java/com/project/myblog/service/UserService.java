@@ -18,11 +18,4 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	@Transactional(readOnly = true)
- 	public User login(User user) {
-		return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword()).orElseThrow(() -> {
-			return new IllegalStateException("해당 사용자는 없습니다.");
-		});
-	}
-
 }

@@ -36,14 +36,14 @@ $(document).ready(function(){
 		
 		$.ajax({
 			type : 'post',
-			url : '/api/user',
+			url : '/auth/joinProc',
 			data : JSON.stringify(data),
 			contentType : 'application/json; charset=utf-8',
 			dataType : 'json',
 		}).done(function(response){
 			alert('회원가입이 완료되었습니다.');
 			
-			location.href= '/user/loginForm';
+			location.href= '/auth/loginForm';
 		}).fail(function(error){
 			alert(JSON.stringify(error));
 		});
