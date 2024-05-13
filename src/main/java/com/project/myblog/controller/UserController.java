@@ -10,7 +10,10 @@ import com.project.myblog.model.RoleType;
 import com.project.myblog.model.User;
 import com.project.myblog.repository.UserRepository;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -46,4 +49,12 @@ public class UserController {
 		userRepository.save(user);
 		return "회원가입이 완료되었습니다.";
 	}
+	
+	@GetMapping("/user/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		
+		return "redirect:/";
+	}
+	
 }

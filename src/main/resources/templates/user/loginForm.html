@@ -17,9 +17,37 @@
 				<div class="mb-3 form-check">
 					<input type="checkbox" class="form-check-input" id="exampleCheck1"> <label class="form-check-label" for="exampleCheck1">로그인 기억</label>
 				</div>
-				<button type="submit" class="btn btn-primary">로그인</button>
+				<button type="submit" class="btn btn-primary" id="loginBtn">로그인</button>
 			</form>
 		</div>
+		
+<script>
+$(document).ready(function(){
+	$('#loginBtn').on('click', function(e){
+		e.preventDefault();
+		
+		const data ={
+			username : $('#username').val(),
+			password : $('#password').val(),
+		};
+		
+		console.log(data);
+		
+		$.ajax({
+			type : 'post',
+			url : '/api/user/login',
+			data : JSON.stringify(data),
+			contentType : 'application/json; charset=utf-8',
+		}).done(function(response){
+			location.href= '/';
+		}).fail(function(error){
+			alert(JSON.stringify(error));
+		});
+	});
+	
+});
+
+</script>
 	</main>
 </body>
 </html>

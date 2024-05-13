@@ -41,10 +41,9 @@ $(document).ready(function(){
 			contentType : 'application/json; charset=utf-8',
 			dataType : 'json',
 		}).done(function(response){
-			console.log(response);
 			alert('회원가입이 완료되었습니다.');
-			return;
-			location.href= '/';
+			
+			location.href= '/user/loginForm';
 		}).fail(function(error){
 			alert(JSON.stringify(error));
 		});
