@@ -11,6 +11,18 @@ import com.project.myblog.model.User;
 public class PrincipalDetail implements UserDetails {
 	private User user;
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public PrincipalDetail(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> collect = new ArrayList<>();
@@ -20,7 +32,9 @@ public class PrincipalDetail implements UserDetails {
 //				return "ROLE_" + user.getRole();
 //			}
 //		});
-		collect.add(()->{ return "ROLE_" + user.getRole(); });
+		collect.add(() -> {
+			return "ROLE_" + user.getRole();
+		});
 		return collect;
 	}
 

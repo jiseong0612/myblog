@@ -15,11 +15,11 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-public class UserApiController {
+public class UserApiController {	
 	private final PasswordEncoder passwordEncoder;
 	private final UserService userService;
 
-	@PostMapping("/auth/joinProc")
+	@PostMapping("/auth/joinProc")	
 	public ResponseDTO<Integer> save(@RequestBody User user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setRole(RoleType.USER);

@@ -33,14 +33,15 @@ public class Board {
 	private int id;
 	@Column(nullable = false, length = 100)
 	private String title;
-	@Lob
+//	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String content;
-	@ColumnDefault("0")
+
 	private int count;
 	@ManyToOne // Board : User == N:1
 	@JoinColumn(name = "userId")
 	private User user; // DB는 오브젝트 저장 불가, 자바는 가능 JPA는 오브젝트로 저장
-	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER)	//EAGER 있으면 무조건 땡겨와!
+	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // EAGER 있으면 무조건 땡겨와!
 	private List<Reply> reply;
 	@CreationTimestamp
 	private Timestamp createDate;
