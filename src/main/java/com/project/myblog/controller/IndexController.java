@@ -16,11 +16,6 @@ public class IndexController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@GetMapping("/")
-	public String index() {
-		return "index";
-	}
-	
 	@PutMapping("/user/{id}")
 	@ResponseBody
 	public User updateUser(@PathVariable(name = "id") int id, @RequestBody User reqUser) {
