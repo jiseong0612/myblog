@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/base :: layout(~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main>
+		<div class="container m-3">
+			<form method="post" action="">
+				<input type="hidden" id="id" th:value="${board.id}">
+				<div class="form-group">
+					<label for="title" class="form-label">제목</label>
+					<input type="text" name="title" class="form-control" id="title" th:value="${board.title}" aria-describedby="emailHelp">
+				</div>
+				
+				<div class="form-group">
+					<label for="content" class="form-label">내용</label> 
+					<textarea class="form-control summernote" id="content">[[${board.content}]]</textarea>
+				</div>
+				
+				<button type="submit" class="btn btn-primary mt-3" id="modifyBtn">수정</button>
+				<button type="submit" class="btn btn-primary mt-3" id="goListBtn">목록</button>
+			</form>
+		</div>
+<script>
+$(document).ready(function() {
+	$('.summernote').summernote({
+		tabsize: 2,
+		height: 300
+     });
+	
+	
+	$('#goListBtn').on('click', function(e){
+		e.preventDefault();
+
+		location.href= '/';
+		
+	});
+	
+	$('#modifyBtn').on('click', function(e){
+		e.preventDefault();
+		
+		const id = $('#id').val();
+		
+		const data ={
+			id,
+			title : $('#title').val(),
+			content : $('#content').val(),
+		};
+		
+		console.log(data);
+		
+		$.ajax({
+			type : 'put',
+			url : '/api/board/'+id,
+			data : JSON.stringify(data),
+			contentType : 'application/json; charset=utf-8',
+		}).done(function(response){
+			location.href= '/';
+		}).fail(function(error){
+			alert(JSON.stringify(error));
+		});
+	});
+});
+</script>
+	</main>
+</body>
+</html>

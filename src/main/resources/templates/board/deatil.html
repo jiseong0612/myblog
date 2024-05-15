@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/base :: layout(~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main>
+		<div class="container m-3">
+				<div class="form-group d-flex justify-content-between">
+					<div>
+						<label for="title" class="form-label">제목</label>
+						<h3 th:text="${board.title}"></h3>
+					</div>
+					<div>
+						<p> 작성자 : [[${board.user.username}]]</p>
+						<p> 글번호 : <span id="boardIdSp">[[${board.id}]]</span></p>
+					</div>
+				</div>
+				
+				<hr>
+				<div class="form-group">
+					<label for="content" class="form-label">내용</label> 
+					<div th:utext="${board.content}"></div>
+				</div>
+				
+				<button class="btn btn-primary mt-3" id="listBtn" onclick="history.back()">목록</button>
+				<th:block th:if="${#authentication.principal.user.id == board.user.id}">
+					<button class="btn btn-warning mt-3" id="modifyBtn">수정</button>
+					<button class="btn btn-danger mt-3" id="deleteBtn">삭제</button>
+				</th:block>
+		</div>
+<script>
+$(document).ready(function() {
+	$('#deleteBtn').on('click', function(e){
+		e.preventDefault();
+		
+		const id = $('#boardIdSp').text();
+		
+		$.ajax({
+			type : 'delete',
+			url : '/api/board/' + id,
+		}).done(function(response){	
+			if(response.data){
+				alert('삭제 완료!');
+				history.back();
+			}
+		}).fail(function(error){
+			alert(JSON.stringify(error));
+		});
+	});
+	
+	$('#modifyBtn').on('click', function(e){
+		e.preventDefault();
+		
+		const id = $('#boardIdSp').text();
+		
+		location.href=`/board/${id}/updateForm`;
+	});
+});
+</script>
+	</main>
+</body>
+</html>

@@ -10,9 +10,21 @@
 			<div class="card m-3" th:each="board : ${boards}">
 				<div class="card-body">
 					<h5 class="card-title" th:text="${board.title}"></h5>
-					<a href="#" class="btn btn-primary">조회</a>
+					<a th:href="|/board/${board.id}|" class="btn btn-primary">상세 보기</a>
 				</div>
 			</div>
+			
+			
+			<nav>
+				<ul class="pagination justify-content-center">
+					<li class="page-item disabled"><a class="page-link">Previous</a></li>
+					<li class="page-item"><a class="page-link" href="#">1</a></li>
+					<li class="page-item active" aria-current="page"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#">Next</a></li>
+				</ul>
+			</nav>
+			
 		</div>
 	</main>
 </body>
