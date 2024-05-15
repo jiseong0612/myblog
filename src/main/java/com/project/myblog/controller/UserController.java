@@ -1,14 +1,11 @@
 package com.project.myblog.controller;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.project.myblog.model.RoleType;
-import com.project.myblog.model.User;
+import com.project.myblog.config.security.PrincipalDetail;
 import com.project.myblog.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -19,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class UserController {
-	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
 	
 	@GetMapping("/auth/loginForm")
@@ -37,6 +33,12 @@ public class UserController {
 		session.invalidate();
 		
 		return "redirect:/";
+	}
+	
+	@GetMapping("/userForm")
+	public String getMethodName(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model) {
+		model.addAttribute("principal", principalDetail);
+		return "/user/userForm";
 	}
 	
 }

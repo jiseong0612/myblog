@@ -58,7 +58,7 @@ public class BoardService {
 
 	//게시글 수정
 	@Transactional
-	public Integer update(int id, Board reqBoard) {
+	public void update(int id, Board reqBoard) {
 		//게시글 영속화
 		Board board = boardRepository.findById(id).orElseThrow(() -> {
 			return new IllegalArgumentException("글 찾기 실패.");
@@ -70,7 +70,6 @@ public class BoardService {
 		
 		//해당 메서드 종료시 트랜젝션 종료, 변경 사항 자동 업데이트(더티체킹)
 		boardRepository.save(board);
-		return null;
 	}
 
 }

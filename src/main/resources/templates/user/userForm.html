@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/base :: layout(~{::main})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main>
+		<div class="container m-3">
+			<form>
+				<input type="hidden" id="id" th:value="${principal.user.id}">
+				<div class="mb-3">
+					<label for="username" class="form-label">아이디</label> 
+					<input type="text" class="form-control" id="username" th:value="${principal.user.username}" readonly="readonly">
+				</div>
+				<div class="mb-3">
+					<label for="password" class="form-label">비밀번호</label> 
+					<input type="password" class="form-control" id="password">
+				</div>
+				<div class="mb-3">
+					<label for="email" class="form-label">이메일</label> 
+					<input type="email" class="form-control" id="email" th:value="${principal.user.email}">
+				</div>
+				<button type="submit" class="btn btn-primary" id="modifyBtn">수정</button>
+			</form>
+		</div>
+		
+<script>
+$(document).ready(function(){
+	$('#modifyBtn').on('click', function(e){
+		e.preventDefault();
+		
+		const id = $('#id').val();
+		
+		const data ={
+			username : $('#username').val(),
+			password : $('#password').val(),
+			email 	 :  $('#email').val(),
+		};
+		
+		console.log(data);
+		
+		$.ajax({
+			type : 'put',
+			url : '/api/user/'+id,
+			data : JSON.stringify(data),
+			contentType : 'application/json; charset=utf-8',
+			dataType : 'json',
+		}).done(function(response){
+			alert('정보 수정이 완료되었습니다.');
+			
+			location.href= '/userForm';
+		}).fail(function(error){
+			alert(JSON.stringify(error));
+		});
+	});
+	
+});
+</script>
+	</main>
+
+</body>
+</html>
