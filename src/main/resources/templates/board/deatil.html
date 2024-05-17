@@ -24,11 +24,32 @@
 					<div th:utext="${board.content}"></div>
 				</div>
 				
+				<div>
+					<div class="card card-body">
+						<h5>댓글을 입력하세요.</h5>
+						<textarea></textarea>
+						<div><button class="btn btn-primary mt-1">등록</button></div>
+					</div>
+				</div>
+				<div class="mt-2">
+					<div class="card card-body">
+						<div class="d-flex justify-content-between">
+						<div>내용입니다.</div>	
+						
+						<div class="d-flex ">
+							<div>작성자 : user00 &nbsp;</div>
+							<div><button class="btn btn-danger badge">삭제</button></div>
+						</div>
+						</div>
+					</div>
+				</div>
+				
 				<button class="btn btn-primary mt-3" id="listBtn" onclick="history.back()">목록</button>
 				<th:block th:if="${#authentication.principal.user.id == board.user.id}">
 					<button class="btn btn-warning mt-3" id="modifyBtn">수정</button>
 					<button class="btn btn-danger mt-3" id="deleteBtn">삭제</button>
 				</th:block>
+				
 		</div>
 <script>
 $(document).ready(function() {
