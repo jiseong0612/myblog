@@ -1,5 +1,10 @@
 package com.project.myblog.controller;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.project.myblog.model.Board;
 import com.project.myblog.service.BoardService;
+import com.project.myblog.util.RedisUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardController {
 	private final BoardService boardService;
+	private final RedisUtils redis;
 
 	/**
 	 * { "content": [ { "id": 1, "title": "test", "content":
@@ -39,6 +46,15 @@ public class BoardController {
 	//글 목록
 	@GetMapping("/")
 	public String index(Model model, @PageableDefault(size = 3, direction = Direction.DESC) Pageable pageable) {
+//		LocalDateTime localDateTime = LocalDateTime.now().plusDays(2);
+//        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+//        Instant instant = zonedDateTime.toInstant();
+//        long milliseconds = instant.toEpochMilli();
+//        
+//		redis.setData("name", "jiseong", milliseconds);
+//
+//		System.out.println(redis.getData("name"));
+		
 		Page<Board> page = boardService.getList(pageable);
 		model.addAttribute("boards", page.getContent());
 		return "index";
